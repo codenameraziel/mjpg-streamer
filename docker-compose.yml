@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mjpg-streamer:
-    image: jacksonliam/mjpg-streamer:latest
+    build: ./mjpg-streamer
     container_name: mjpg-streamer
     restart: unless-stopped
     privileged: true

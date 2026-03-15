@@ -1,0 +1,20 @@
+FROM octoprint/octoprint:latest
+
+# Instalar dependências necessárias para compilar o MJPG-Streamer
+RUN apt-get update && apt-get install -y \
+    git build-essential cmake libjpeg-dev imagemagick ffmpeg htop \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clonar o fork mais atualizado do MJPG-Streamer
+RUN git clone https://github.com/jacksonliam/mjpg-streamer.git /opt/mjpg-streamer \
+    && cd /opt/mjpg-streamer/mjpg-streamer-experimental \
+    && make \
+    && make install
+
+# Ajustar variáveis de ambiente para MJPG-Streamer
+ENV ENABLE_MJPG_STREAMER=true \
+    MJPG_STREAMER_INPUT="-y -n -r 1920x1080 -f 30 -d /dev/video0" \
+    MJPG_STREAMER_OUTPUT="-o output_http.so -w /opt/mjpg-streamer/mjpg-streamer-experimental/www"
+
+EXPOSE 5000 8080
+

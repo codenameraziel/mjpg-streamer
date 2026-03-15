@@ -2,12 +2,13 @@ version: "3.8"
 
 services:
   mjpg-streamer:
-    build: .
+    build: ./mjpg-streamer
     container_name: mjpg-streamer
-    restart: always
+    restart: unless-stopped
     privileged: true
     devices:
       - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
     environment:
       MJPG_STREAMER_INPUT: "-i input_uvc.so -y -n -r 1920x1080 -f 30 -d /dev/video0"
       MJPG_STREAMER_OUTPUT: "-o output_http.so -w /opt/mjpg-streamer/mjpg-streamer-experimental/www -p 8080"

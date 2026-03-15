@@ -8,7 +8,6 @@ services:
     privileged: true
     devices:
       - /dev/video0:/dev/video0
-      - /dev/video1:/dev/video1
     environment:
       ENABLE_MJPG_STREAMER: "true"
       MJPG_STREAMER_INPUT: "-i input_uvc.so -y -n -r 1920x1080 -f 30 -d /dev/video0"
